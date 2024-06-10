@@ -12,7 +12,21 @@ const browse = async (req, res, next) => {
     next(err);
   }
 };
+const edit = async (req, res, next) => {
+  try {
+    const boat = {
+      coord_x: req.body.coord_x,
+      coord_y: req.body.coord_y,
+      id: req.params.id
+    }
+    const response = await tables.boat.edit(boat);
+    if (response === 1) {
+      res.sendStatus(204);
+    } else res.sendStatus(404);
+  }
+  catch (err) { next(err); }
+};
 
 module.exports = {
-  browse,
+  browse, edit
 };
