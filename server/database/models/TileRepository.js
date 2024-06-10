@@ -8,7 +8,7 @@ class TileRepository extends AbstractRepository {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all tiles from the "tile" table
     const [rows] = await this.database.query(
-      `select * from ${this.table} order by coord_y, coord_x`
+      `select * from ${this.table} order by coord_y, coord_x`,
     );
 
     // Return the array of tiles
@@ -17,7 +17,7 @@ class TileRepository extends AbstractRepository {
 
   async getRandomIsland() {
     const [rows] = await this.database.query(
-      `select id from ${this.table} where type="island" order by rand() limit 1`
+      `select id from ${this.table} where type="island" order by rand() limit 1`,
     );
 
     return rows[0];
@@ -30,10 +30,19 @@ class TileRepository extends AbstractRepository {
           when id = ? then true
           else false
         end`,
-      [island.id]
+      [island.id],
     );
 
     return result;
+  }
+
+  async readByCoordinates(coordX, coordY) {
+    const [tilesCoordonnates] = await this.database.query(
+      `select * from ${this.table} where coord_x = ? AND coord_y = ? `,
+      [coordX, coordY],
+    );
+
+    return tilesCoordonnates;
   }
 }
 
