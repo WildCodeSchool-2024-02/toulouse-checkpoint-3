@@ -7,9 +7,10 @@ const router = express.Router();
 /* ************************************************************************* */
 
 const { browse } = require("../../../controllers/tileActions");
+const tileExists = require("../../../services/tileExists");
 
-router.get("/", browse);
-
+router.get("/", tileExists, browse);
+router.get("/:id");
 /* ************************************************************************* */
 
 module.exports = router;

@@ -35,6 +35,19 @@ class TileRepository extends AbstractRepository {
 
     return result;
   }
+
+  async readByCoordinates(coordX, coordY) {
+    try {
+      const [rows] = await this.database.query(
+        `select * from ${this.table} where coord_x = ? and coord_y = ?`,
+        [coordX, coordY]
+      );
+      return rows; // Returns an array of tiles, can be empty
+    } catch (error) {
+      console.error("Database query failed:", error);
+      return []; // Returns an empty array in case of error
+    }
+  }
 }
 
 module.exports = TileRepository;

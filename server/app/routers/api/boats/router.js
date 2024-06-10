@@ -7,8 +7,9 @@ const router = express.Router();
 /* ************************************************************************* */
 
 const { edit } = require("../../../controllers/boatActions");
+const tileExists = require("../../../services/tileExists");
 
-router.put("/:id", edit);
+router.put("/:id", tileExists, edit);
 
 /* ************************************************************************* */
 
