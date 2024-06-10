@@ -1,6 +1,6 @@
 const tables = require("../../database/tables");
 
-const browse = async (req, res, next) => {
+const browse = async (_, res, next) => {
   try {
     // Fetch all boats from the database
     const boats = await tables.boat.readAll();
@@ -13,6 +13,24 @@ const browse = async (req, res, next) => {
   }
 };
 
+const edit = async (req, res, next) => {
+  try {
+    const result = await tables.boat.update({
+      coord_x: req.body.coord_x,
+      coord_y: req.body.coord_y,
+      id: req.params.id,
+    });
+    if (result) {
+      res.status(204).send();
+    } else {
+      res.status(404).send("Bateau non trouvé");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   browse,
+  edit,
 };
