@@ -41,7 +41,7 @@ class TileRepository extends AbstractRepository {
       `SELECT * FROM ${this.table} WHERE coord_x = ? AND coord_y = ?`,
       [coordX, coordY]
     );
-    return rows;
+    return rows || [];
   }
 }
 
