@@ -5,10 +5,13 @@ class BoatRepository extends AbstractRepository {
     super({ table: "boat" });
   }
 
-  async readAll() {
-    const [rows] = await this.database.query(
-      `select boat.id, boat.coord_x, boat.coord_y, boat.name, tile.type, tile.has_treasure from ${this.table} JOIN tile ON boat.coord_x = tile.coord_x AND boat.coord_y = tile.coord_y`
-    );
+  async readAll(where) {
+    let query = `select boat.id, boat.coord_x, boat.coord_y, boat.name, tile.type, tile.has_treasure, tile.coord_y, tile.coord_x from boat JOIN tile ON boat.coord_x = tile.coord_x AND boat.coord_y = tile.coord_y`;
+
+    if (where && where.name) {
+      query += ` where boat.name = '${where.name}'`;
+    }
+    const [rows] = await this.database.query(query);
 
     return rows;
   }
