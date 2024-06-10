@@ -6,11 +6,10 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-const { browse, edit } = require("../../../controllers/boatActions");
-const tileExists = require("../../../services/tileExists");
+const { add, browse } = require("../../../controllers/tileActions");
 
+router.post("/", add);
 router.get("/", browse);
-router.put("/:id", tileExists, edit);
 
 /* ************************************************************************* */
 
