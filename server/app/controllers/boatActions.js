@@ -14,15 +14,15 @@ const browse = async (req, res, next) => {
 };
 const edit = async (req, res, next) => {
   try {
-    const boat = {
+    const result = await tables.boat.update({
       coord_x: req.body.coord_x,
       coord_y: req.body.coord_y,
       id: req.params.id
-    }
-    const response = await tables.boat.edit(boat);
-    if (response === 1) {
+    })
+
+    if (result) {
       res.sendStatus(204);
-    } else res.sendStatus(404);
+    } else { res.sendStatus(404) };
   }
   catch (err) { next(err); }
 };
