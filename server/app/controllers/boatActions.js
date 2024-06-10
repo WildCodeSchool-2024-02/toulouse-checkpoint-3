@@ -13,6 +13,9 @@ const browse = async (req, res, next) => {
   }
 };
 
+// const edit = (req, res, next) => {};
+
 module.exports = {
   browse,
+  // edit,
 };
